@@ -15,6 +15,8 @@ fs.readFile('./database/question.json', 'UTF-8', (error, value) => {
 		let trueCaunt = 0
 		let falseCaunt = 0
 		let check = true
+		let questionCaunt = data.length
+		let questionOrder = 0
 
 		let generate = questionRender(randomArray(data))
 
@@ -24,11 +26,18 @@ fs.readFile('./database/question.json', 'UTF-8', (error, value) => {
 		readline.prompt()
 
 		readline.on('line', (data) => {
-			if (!question) {
+			if (!question && data) {
 				userName = data
-				console.log('Salom ' + data + ", o'yin boshlandi!")
+				console.log('\nSalom ' + data + ", o'yin boshlandi!")
+				check = true
 			}
-			else if(!("ABCD").includes(data)) {
+			else if(!data && !question) {
+				console.log("\nIsmingizni kiritmadingiz!")
+				readline.setPrompt("\nIltimos ismingizni qaytadan kiriting: ")
+				readline.prompt()
+				check = false
+			}
+			else if(!("ABCD").includes(data) || !data) {
 				console.log("\nSiz noto'g'ri qiymat kiritdingiz!")
 				console.log("Iltimos, 'A','B','C','D' lardan birini tanlang!\n")
 				check = false
@@ -40,8 +49,9 @@ fs.readFile('./database/question.json', 'UTF-8', (error, value) => {
 			}
 
 			question = check ? generate.next().value : question
+			questionOrder = check ? questionOrder + 1 : questionOrder
 
-			if(!question) {
+			if(!question && check) {
 				fs.readFile('./database/users.json', 'UTF-8', (error, data) => {
 					if(error) console.log(error)
 					else {
@@ -49,10 +59,11 @@ fs.readFile('./database/question.json', 'UTF-8', (error, value) => {
 						userData.push({
 							userName,
 							trueCaunt,
-							falseCaunt
+							falseCaunt,
+							questionCaunt
 						})
 						console.log("\n" + userName + ": sizning natijangiz!")
-						console.table([{"Ishtirokchi": userName, "To'g'ri": trueCaunt, "Noto'g'ri": falseCaunt}])
+						console.table([{"Ishtirokchi": userName, "Jami savollar": questionCaunt, "To'g'ri": trueCaunt, "Noto'g'ri": falseCaunt}])
 						fs.writeFile('./database/users.json', JSON.stringify(userData, null, 4), () => null)
 
 					}
@@ -60,16 +71,19 @@ fs.readFile('./database/question.json', 'UTF-8', (error, value) => {
 				return readline.close()
 			}
 			check ? console.log(`
-Savol: ${question.question}
+${questionOrder}-Savol: ${question.question}
 
 A: ${question.A}
 B: ${question.B}
 C: ${question.C}
 D: ${question.D}
 `) : null
-			readline.setPrompt("Javobni kiriting: ")
-			readline.prompt()
-			})
+			if(question) {
+				readline.setPrompt("Javobni kiriting: ")
+				readline.prompt()
+			}
+			
+		})
 	}
 })
 
@@ -87,12 +101,4 @@ function randomArray(array) {
 	}
 	return newArray
 }
-
-
-
-
-
-
-
-
 
