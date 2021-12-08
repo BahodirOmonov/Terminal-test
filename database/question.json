@@ -1,0 +1,42 @@
+[
+    {
+        "question": "O'zbekiston poytaxti qayer?",
+        "A": "Toshkent",
+        "B": "Samarqand",
+        "C": "Qarshi",
+        "D": "Navoiy",
+        "answer": "A"
+    },
+    {
+        "question": "Norvegiyaning poytaxti qayer?",
+        "A": "Reykyavik",
+        "B": "Kishinyov",
+        "C": "Oslo",
+        "D": "Tirana",
+        "answer": "C"
+    },
+    {
+        "question": "Albaniyaning poytaxti qayer?",
+        "A": "Reykyavik",
+        "B": "Kishinyov",
+        "C": "Oslo",
+        "D": "Tirana",
+        "answer": "D"
+    },
+    {
+        "question": "Nepalning poytaxti qayer?",
+        "A": "Maskat",
+        "B": "Omman",
+        "C": "Katmandu",
+        "D": "Uagadugu",
+        "answer": "C"
+    },
+    {
+        "question": "Portugaliyani poytaxti qayer?",
+        "A": "Madrid",
+        "B": "Parij",
+        "C": "Lissabon",
+        "D": "Vilnyus",
+        "answer": "C"
+    }
+]
